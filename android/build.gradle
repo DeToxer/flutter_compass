@@ -2,13 +2,15 @@ group 'com.hemanthraj.fluttercompass'
 version '1.0-SNAPSHOT'
 
 buildscript {
+    ext.kotlin_version = '1.8.22'
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.1'
+        classpath 'com.android.tools.build:gradle:8.2.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -22,12 +24,22 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 30
+
+    if (project.android.hasProperty("namespace")) {
+        namespace 'com.hemanthraj.fluttercompass'
+    }
+    compileSdk 34
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
     defaultConfig {
-        minSdkVersion 20
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        minSdkVersion 26
+        targetSdkVersion 34
     }
+
     lintOptions {
         disable 'InvalidPackage'
     }
